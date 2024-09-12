@@ -1,4 +1,4 @@
-package co.edu.uniquindio.ProyectoFinal.dto;
+package co.edu.uniquindio.ProyectoFinal.dto.evento;
 
 public record ItemEventoDTO(
         String urlImagenPoster,

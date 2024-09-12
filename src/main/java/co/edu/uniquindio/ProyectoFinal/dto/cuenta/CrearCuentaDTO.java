@@ -1,12 +1,8 @@
-package co.edu.uniquindio.ProyectoFinal.dto;
+package co.edu.uniquindio.ProyectoFinal.dto.cuenta;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
-
-import java.time.LocalDateTime;
 
 public record CrearCuentaDTO(
 

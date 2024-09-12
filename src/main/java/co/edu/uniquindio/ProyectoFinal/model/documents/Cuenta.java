@@ -12,12 +12,15 @@ import java.time.LocalDateTime;
 
 @Document("cuentas")
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 public class Cuenta {
+
+
 
     @Id
 //  @EqualsAndHashCode
@@ -36,7 +39,16 @@ public class Cuenta {
     @Builder
     public Cuenta (String email,Rol rol,CodigoValidacion codigoValidacionRegistro,CodigoValidacion codigoValidacionPassword,EstadoCuenta estadoCuenta,LocalDateTime fechaRegistro) {
 
-
+        this.idCuenta = idCuenta;
+        this.password = password;
+        this.email = email;
+        this.rol = rol;
+        this.codigoValidacionRegistro = codigoValidacionRegistro;
+        this.codigoValidacionPassword = codigoValidacionPassword;
+        this.estadoCuenta = estadoCuenta;
+        this.usuario = usuario;
+        this.fechaRegistro = fechaRegistro;
 
     }
+
 }

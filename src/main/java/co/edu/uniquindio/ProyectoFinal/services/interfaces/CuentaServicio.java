@@ -1,6 +1,6 @@
-package co.edu.uniquindio.ProyectoFinal.services.interfac;
+package co.edu.uniquindio.ProyectoFinal.services.interfaces;
 
-import co.edu.uniquindio.ProyectoFinal.dto.*;
+import co.edu.uniquindio.ProyectoFinal.dto.cuenta.*;
 
 public interface CuentaServicio {
 

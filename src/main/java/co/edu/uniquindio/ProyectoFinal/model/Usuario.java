@@ -10,8 +10,6 @@ import lombok.Setter;
 public class Usuario {
 
 
-    private String id;
-
     private String telefono;
     private String direccion;
     private String cedula;

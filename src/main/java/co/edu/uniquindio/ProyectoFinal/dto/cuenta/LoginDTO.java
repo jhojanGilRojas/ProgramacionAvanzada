@@ -1,4 +1,4 @@
-package co.edu.uniquindio.ProyectoFinal.dto;
+package co.edu.uniquindio.ProyectoFinal.dto.cuenta;
 
 public record LoginDTO(
         String correo,
