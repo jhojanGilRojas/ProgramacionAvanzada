@@ -1,7 +1,7 @@
 package co.edu.uniquindio.ProyectoFinal.services.interfaces;
 
-import co.edu.uniquindio.unieventos.dto.evento.FiltroEventoDTO;
-import co.edu.uniquindio.unieventos.dto.evento.ItemEventoDTO;
+import co.edu.uniquindio.ProyectoFinal.dto.evento.*;
+
 import java.util.List;
 
 public interface EventoServicio {
