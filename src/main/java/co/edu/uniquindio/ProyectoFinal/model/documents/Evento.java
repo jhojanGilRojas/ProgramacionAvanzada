@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Document("eventos")
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -33,5 +33,18 @@ public class Evento {
     private EstadoEvento estado;
     private TipoEvento tipo;
 
+    @Builder
 
+    public Evento(String nombre, String descripcion, String direccion, String imagenPortada, String imagenLocalidades, String ciudad, LocalDateTime fecha, List<Localidad> localidades, EstadoEvento estado, TipoEvento tipo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.direccion = direccion;
+        this.imagenPortada = imagenPortada;
+        this.imagenLocalidades = imagenLocalidades;
+        this.ciudad = ciudad;
+        this.fecha = fecha;
+        this.localidades = localidades;
+        this.estado = estado;
+        this.tipo = tipo;
+    }
 }
