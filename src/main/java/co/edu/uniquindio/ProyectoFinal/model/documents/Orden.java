@@ -30,5 +30,7 @@ public class Orden {
     private ObjectId idCupon;
     private List<DetalleOrden> items;
     private float total;
+
+
     // construtor Builder
 }

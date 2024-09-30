@@ -19,9 +19,6 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 public class Cuenta {
-
-
-
     @Id
 //  @EqualsAndHashCode
     private String idCuenta;

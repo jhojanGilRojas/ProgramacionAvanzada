@@ -30,7 +30,7 @@ public class CuentaServicioImpl implements CuentaServicio {
             throw new Exception("El correo ya existe");
         }
         String codigoAleatorio = generalCodigo();
-        Cuenta nuevaCuenta =new Cuenta();
+        Cuenta nuevaCuenta = new Cuenta();
         nuevaCuenta.setEmail(cuenta.correo());
         nuevaCuenta.setPassword(cuenta.correo());
         nuevaCuenta.setRol(Rol.CLIENTE);
@@ -46,7 +46,9 @@ public class CuentaServicioImpl implements CuentaServicio {
                 new CodigoValidacion(codigoAleatorio,LocalDateTime.now())
         );
 
-        return "";
+        cuentaRepo.save(nuevaCuenta);
+
+        return "Se ha creado el usuario correctamente";
     }
 
     private String generalCodigo() {
