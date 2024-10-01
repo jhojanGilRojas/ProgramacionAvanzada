@@ -1,6 +1,7 @@
 package co.edu.uniquindio.ProyectoFinal.services.implement;
 
 import co.edu.uniquindio.ProyectoFinal.dto.carrito.DetalleCarritoDTO;
+import co.edu.uniquindio.ProyectoFinal.dto.carrito.EliminarEventoCarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.model.DetalleCarrito;
 import co.edu.uniquindio.ProyectoFinal.model.documents.Carrito;
 import co.edu.uniquindio.ProyectoFinal.model.documents.Cuenta;
@@ -49,22 +50,47 @@ public class CarritoServicioImpl implements CarritoServicio {
         if(optionalCarrito.isEmpty()){
             throw new Exception("No se encontro el carrito con el id: "+detalle.idCarrito());
         }
+        Carrito carrito = optionalCarrito.get();
+
+        carrito.getItems().forEach((item)->{
+            if(item.getIdEvento().equals(detalle.idEvento())){
+                throw new RuntimeException("El evento ya se encuentra en el carrito");
+            }
+        });
+
         DetalleCarrito detalleCarrito = new DetalleCarrito();
         detalleCarrito.setCantidad(detalle.cantidad());
         detalleCarrito.setIdEvento(detalle.idEvento());
         detalleCarrito.setNombreLocalidad(detalle.nombreLocalidad());
-
-        Carrito carrito = optionalCarrito.get();
         carrito.getItems().add(detalleCarrito);
-
         carritoRepo.save(carrito);
 
         return "Se ha añadido el item al carrito";
     }
 
     @Override
-    public String eliminarProductoCarrito(String idProducto, String idUsuario) throws Exception {
-        return "";
+    public String eliminarProductoCarrito(EliminarEventoCarritoDTO eliminarEventoCarritoDTO) throws Exception {
+        Optional<Carrito> optionalCarrito = carritoRepo.findById(eliminarEventoCarritoDTO.idCarrito());
+        if(optionalCarrito.isEmpty()){
+            throw new Exception("No se encontro el carrito con el id: "+eliminarEventoCarritoDTO.idCarrito());
+        }
+
+        Carrito carrito = optionalCarrito.get();
+
+        if(carrito.getItems().isEmpty()){
+            throw new Exception("El carrito esta vacio");
+        }
+
+        carrito.getItems().removeIf((item) -> {
+            if(item.getIdEvento().equals(eliminarEventoCarritoDTO.idEvento())){
+                return true;
+            }else{
+                throw new RuntimeException("No se encontro el evento con el id: "+eliminarEventoCarritoDTO.idEvento());
+            }
+        });
+
+        carritoRepo.save(carrito);
+        return "Se ha eliminado el evento del carrito correctamente";
     }
 
     @Override

@@ -1,6 +1,7 @@
 package co.edu.uniquindio.ProyectoFinal;
 
 import co.edu.uniquindio.ProyectoFinal.dto.carrito.DetalleCarritoDTO;
+import co.edu.uniquindio.ProyectoFinal.dto.carrito.EliminarEventoCarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.cuenta.CrearCuentaDTO;
 import co.edu.uniquindio.ProyectoFinal.services.interfaces.CarritoServicio;
 import org.junit.jupiter.api.Test;
@@ -26,17 +27,27 @@ public class CarritoServicioTest {
     }
 
     @Test
-    void agregarProductoCarritoTest() {
-
+    void agregarEventoCarritoTest() {
         DetalleCarritoDTO detalleCarritoDTO = new DetalleCarritoDTO(
                 "66fb203c19d1bf7f668c8b52",
                 "66f844d7f44928092f864e78",
                 2,
                 "Platino"
         );
-
         assertDoesNotThrow(() ->{
             String respuesta = carritoServicio.agregarProductoCarrito(detalleCarritoDTO);
+            assertNotNull(respuesta);
+        });
+    }
+
+    @Test
+    void eliminarEventoCarritoTest() {
+        EliminarEventoCarritoDTO eliminarEventoCarritoDTO = new EliminarEventoCarritoDTO(
+                "66fb203c19d1bf7f668c8b52",
+                "66f844d7f44928092f864e78"
+        );
+        assertDoesNotThrow(() ->{
+            String respuesta = carritoServicio.eliminarProductoCarrito(eliminarEventoCarritoDTO);
             assertNotNull(respuesta);
         });
     }
