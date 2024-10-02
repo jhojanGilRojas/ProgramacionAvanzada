@@ -1,6 +1,7 @@
 package co.edu.uniquindio.ProyectoFinal.services.implement;
 
 import co.edu.uniquindio.ProyectoFinal.dto.carrito.ActualizarEventoCarritoDTO;
+import co.edu.uniquindio.ProyectoFinal.dto.carrito.CarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.carrito.DetalleCarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.carrito.EliminarEventoCarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.model.DetalleCarrito;
@@ -117,12 +118,24 @@ public class CarritoServicioImpl implements CarritoServicio {
     }
 
     @Override
-    public String obtenerInformacionCarrito(String idUsuario) throws Exception {
-        return "";
+    public String obtenerInformacionCarrito(String idCarrito) throws Exception {
+        Optional<Carrito> optionalCarrito = carritoRepo.findById(idCarrito);
+        if(optionalCarrito.isEmpty()){
+            throw new Exception("No se encontro el carrito con el id: "+idCarrito);
+        }
+
+        Carrito carrito = optionalCarrito.get();
+        CarritoDTO carritoDTO = new CarritoDTO(
+                carrito.getId(),
+                carrito.getFecha(),
+                carrito.getItems(),
+                carrito.getIdUsuario()
+        );
+        return ""+carritoDTO;
     }
 
     @Override
-    public String actualizarCarrito(ActualizarEventoCarritoDTO actualizarEventoCarritoDTO) throws Exception {
+    public String actualizarEventoCarrito(ActualizarEventoCarritoDTO actualizarEventoCarritoDTO) throws Exception {
 
 
         return "";
@@ -132,7 +145,4 @@ public class CarritoServicioImpl implements CarritoServicio {
         return eventoRepo.buscarEvento(idEvento).isPresent();
     }
 
-    private boolean existeCarrtito(String idCarrito){
-        return carritoRepo.buscarCarrito(idCarrito).isPresent();
-    }
 }

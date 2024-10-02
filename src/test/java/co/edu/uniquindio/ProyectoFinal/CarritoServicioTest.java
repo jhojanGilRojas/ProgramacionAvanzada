@@ -60,4 +60,13 @@ public class CarritoServicioTest {
             assertNotNull(respuesta);
         });
     }
+
+    @Test
+    void obtenerCarritoTest() {
+        String idCarrito = "66fb203c19d1bf7f668c8b52";
+        assertDoesNotThrow(() ->{
+            String respuesta = carritoServicio.obtenerInformacionCarrito(idCarrito);
+            System.out.println(respuesta);
+        });
+    }
 }

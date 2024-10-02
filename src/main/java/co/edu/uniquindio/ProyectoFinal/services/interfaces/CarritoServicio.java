@@ -9,7 +9,7 @@ public interface CarritoServicio {
     String crearCarrito(String idUsuario) throws Exception;
     String agregarEventoCarrito(DetalleCarritoDTO detalleCarritoDTO) throws Exception;
     String eliminarEventoCarrito(EliminarEventoCarritoDTO eliminarEventoCarritoDTO) throws Exception;
-    String actualizarCarrito(ActualizarEventoCarritoDTO actualizarEventoCarritoDTO) throws Exception;
+    String actualizarEventoCarrito(ActualizarEventoCarritoDTO actualizarEventoCarritoDTO) throws Exception;
 
 
     String limpiarCarrito(String idUsuario) throws Exception;
