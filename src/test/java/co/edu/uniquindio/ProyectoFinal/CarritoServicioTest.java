@@ -1,5 +1,7 @@
 package co.edu.uniquindio.ProyectoFinal;
 
+import co.edu.uniquindio.ProyectoFinal.dto.carrito.ActualizarEventoCarritoDTO;
+import co.edu.uniquindio.ProyectoFinal.dto.carrito.CarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.carrito.DetalleCarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.carrito.EliminarEventoCarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.cuenta.CrearCuentaDTO;
@@ -7,6 +9,8 @@ import co.edu.uniquindio.ProyectoFinal.services.interfaces.CarritoServicio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -67,6 +71,21 @@ public class CarritoServicioTest {
         assertDoesNotThrow(() ->{
             String respuesta = carritoServicio.obtenerInformacionCarrito(idCarrito);
             System.out.println(respuesta);
+        });
+    }
+
+    @Test
+    void actualizarEventoCarritoTest(){
+        ActualizarEventoCarritoDTO actualizarEventoCarritoDTO = new ActualizarEventoCarritoDTO(
+                "66fb203c19d1bf7f668c8b52",
+                "66f846fff4ebbe46dd1963ad",
+                3,
+                "Otra localidad"
+        );
+
+        assertDoesNotThrow(() ->{
+            String respuesta = carritoServicio.actualizarEventoCarrito(actualizarEventoCarritoDTO);
+            assertNotNull(respuesta);
         });
     }
 }
