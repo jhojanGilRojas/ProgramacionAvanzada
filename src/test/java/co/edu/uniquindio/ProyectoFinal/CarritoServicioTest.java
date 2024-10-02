@@ -30,12 +30,12 @@ public class CarritoServicioTest {
     void agregarEventoCarritoTest() {
         DetalleCarritoDTO detalleCarritoDTO = new DetalleCarritoDTO(
                 "66fb203c19d1bf7f668c8b52",
-                "66f844d7f44928092f864e78",
+                "66f846fff4ebbe46dd1963ad",
                 2,
                 "Platino"
         );
         assertDoesNotThrow(() ->{
-            String respuesta = carritoServicio.agregarProductoCarrito(detalleCarritoDTO);
+            String respuesta = carritoServicio.agregarEventoCarrito(detalleCarritoDTO);
             assertNotNull(respuesta);
         });
     }
@@ -47,7 +47,16 @@ public class CarritoServicioTest {
                 "66f844d7f44928092f864e78"
         );
         assertDoesNotThrow(() ->{
-            String respuesta = carritoServicio.eliminarProductoCarrito(eliminarEventoCarritoDTO);
+            String respuesta = carritoServicio.eliminarEventoCarrito(eliminarEventoCarritoDTO);
+            assertNotNull(respuesta);
+        });
+    }
+
+    @Test
+    void limpiarCarritoTest() {
+        String idCarrito = "66fb203c19d1bf7f668c8b52";
+        assertDoesNotThrow(() ->{
+            String respuesta = carritoServicio.limpiarCarrito(idCarrito);
             assertNotNull(respuesta);
         });
     }
