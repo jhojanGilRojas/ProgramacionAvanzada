@@ -113,6 +113,8 @@ public class CuentaServicioImpl implements CuentaServicio {
         return "Su cuenta se ha eliminado correctamente.";
     }
 
+
+
     @Override
     @Transactional(readOnly = true)//Este metodo solo va a utilizar recurso para lectura
     public InformacionCuentaDTO obtenerInformacionCuenta(String id) throws Exception {
@@ -196,7 +198,7 @@ public class CuentaServicioImpl implements CuentaServicio {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-        if( !passwordEncoder.matches(loginDTO.password(), cuenta.getPassword()) ) {
+        if( !passwordEncoder.matches(loginDTO.password(),cuenta.getPassword()) ) {
             throw new Exception("La contraseña es incorrecta");
         }
 
