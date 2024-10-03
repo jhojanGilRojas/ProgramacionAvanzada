@@ -11,13 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Document("cuentas")
-@AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
+@NoArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Builder
 public class Cuenta {
 
 
@@ -37,9 +35,8 @@ public class Cuenta {
 
     // construtor Builder
     @Builder
-    public Cuenta (String email,Rol rol,CodigoValidacion codigoValidacionRegistro,CodigoValidacion codigoValidacionPassword,EstadoCuenta estadoCuenta,LocalDateTime fechaRegistro) {
+    public Cuenta (String email,String password,Rol rol,CodigoValidacion codigoValidacionRegistro,CodigoValidacion codigoValidacionPassword,EstadoCuenta estadoCuenta,LocalDateTime fechaRegistro, Usuario usuario) {
 
-        this.idCuenta = idCuenta;
         this.password = password;
         this.email = email;
         this.rol = rol;
