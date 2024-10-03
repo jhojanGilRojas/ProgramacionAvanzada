@@ -35,7 +35,7 @@ public class CarritoServicioTest {
         DetalleCarritoDTO detalleCarritoDTO = new DetalleCarritoDTO(
                 "66fb203c19d1bf7f668c8b52",
                 "66f846fff4ebbe46dd1963ad",
-                2,
+                101,
                 "Platino"
         );
         assertDoesNotThrow(() ->{

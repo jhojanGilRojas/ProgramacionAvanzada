@@ -6,6 +6,7 @@ import co.edu.uniquindio.ProyectoFinal.dto.cuenta.*;
 import co.edu.uniquindio.ProyectoFinal.model.CodigoValidacion;
 import co.edu.uniquindio.ProyectoFinal.model.Usuario;
 import co.edu.uniquindio.ProyectoFinal.model.documents.Cuenta;
+import co.edu.uniquindio.ProyectoFinal.model.documents.Evento;
 import co.edu.uniquindio.ProyectoFinal.model.enums.EstadoCuenta;
 import co.edu.uniquindio.ProyectoFinal.model.enums.Rol;
 import co.edu.uniquindio.ProyectoFinal.repositories.CuentaRepo;
@@ -103,5 +104,12 @@ public class CuentaServicioImpl implements CuentaServicio {
     @Override
     public String iniciarSesion(LoginDTO loginDTO) throws Exception {
         return "";
+    }
+
+    @Override
+    public Cuenta obtenerPorID(String idCuenta) throws Exception {
+
+            return cuentaRepo.findById(idCuenta).orElseThrow(()-> new Exception("No se encontro el evento con el id: "+idCuenta));
+
     }
 }

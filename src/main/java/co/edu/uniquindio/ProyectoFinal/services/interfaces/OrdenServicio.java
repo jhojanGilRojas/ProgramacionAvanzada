@@ -11,4 +11,5 @@ public interface OrdenServicio {
 
     InformacionOrdenDTO obtenerInformacionOrden(String id) throws Exception;
 
+    void recibirNotificacionMercadoPago();
 }
