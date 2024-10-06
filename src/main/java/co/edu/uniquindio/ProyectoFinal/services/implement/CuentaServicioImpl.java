@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,10 +26,14 @@ public class CuentaServicioImpl implements CuentaServicio {
     @Override
     public String crearCuenta(CrearCuentaDTO cuenta) throws Exception{
 
-
-        if (existeEmail(cuenta.correo())){
+        Optional<Cuenta> cuentaOpcional = cuentaRepo.buscarEmail(cuenta.correo());
+        if (cuentaOpcional.isPresent()){
             throw new Exception("El correo ya existe");
         }
+        if (cuentaOpcional.isEmpty()){
+            throw new Exception("El correo no existe");
+        }
+        
         String codigoAleatorio = generalCodigo();
         Cuenta nuevaCuenta =new Cuenta();
         nuevaCuenta.setEmail(cuenta.correo());
@@ -67,9 +72,8 @@ public class CuentaServicioImpl implements CuentaServicio {
         return cuentaRepo.buscarEmail(email).isPresent();
     }
     private boolean existeCedula(String cedula){
-        return false ;
+        return cuentaRepo.buscarCedula(cedula).isPresent() ;
     }
-    // hacer lo mismo con la cedula
 
     @Override
     public String editarCuenta(EditarCuentaDTO cuenta) throws Exception {
