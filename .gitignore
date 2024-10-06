@@ -9,6 +9,8 @@ build/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+src/main/resources/proyectofinal-36f67-firebase-adminsdk-neth4-127e02dbe6.json
+src/main/resources/MX-23.4_x64.iso
 *.iws
 *.iml
 *.ipr
