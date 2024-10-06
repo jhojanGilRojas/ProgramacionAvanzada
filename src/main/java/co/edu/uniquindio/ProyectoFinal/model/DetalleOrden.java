@@ -11,8 +11,7 @@ import org.bson.types.ObjectId;
 @Getter
 @ToString
 public class DetalleOrden {
-
-    private String id;
+    // se elimino un id inecesario
     private String nombreLocalidad;
     private ObjectId idEvento;
     private float precio;

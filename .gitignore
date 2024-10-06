@@ -9,6 +9,7 @@ build/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+src/main/resources/MX-23.4_x64.iso
 *.iws
 *.iml
 *.ipr
