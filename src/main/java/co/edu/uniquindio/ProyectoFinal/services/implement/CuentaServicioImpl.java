@@ -97,7 +97,7 @@ public class CuentaServicioImpl implements CuentaServicio {
             cuentaModificada.getUsuario().setNombre(cuenta.nombre());
             cuentaModificada.getUsuario().setDireccion(cuenta.direccion());
             cuentaModificada.getUsuario().setTelefono(cuenta.telefono());
-            cuentaModificada.setPassword(cuenta.password());
+            cuentaModificada.setPassword(encriptarPassword(cuenta.password()));
             cuentaRepo.save(cuentaModificada);
 
         return cuentaModificada.getIdCuenta();
@@ -120,7 +120,7 @@ public class CuentaServicioImpl implements CuentaServicio {
     public InformacionCuentaDTO obtenerInformacionCuenta(String id) throws Exception {
 
         Cuenta cuenta = obtenerPorId(id);
-        return new InformacionCuentaDTO(
+        InformacionCuentaDTO informacionCuentaDTO = new InformacionCuentaDTO(
                 id,
                 cuenta.getUsuario().getCedula(),
                 cuenta.getUsuario().getNombre(),
@@ -128,6 +128,11 @@ public class CuentaServicioImpl implements CuentaServicio {
                 cuenta.getUsuario().getDireccion(),
                 cuenta.getEmail()
         );
+        if (cuenta.getEstadoCuenta()==EstadoCuenta.ELIMINADO){
+
+            throw new Exception("La cuenta ha sido eliminada");
+        }
+        return informacionCuentaDTO;
     }
 
     private Cuenta obtenerPorId(String id) {
@@ -150,7 +155,7 @@ public class CuentaServicioImpl implements CuentaServicio {
         cuentaRepo.save(cuenta);
         emailServicio.enviarCorreo( new EmailDTO("Codigo validación password", "su codigo es: "+cuenta.getCodigoValidacionRegistro(), cuenta.getEmail()) );
 
-        return "Se ha enviado un correo con el código de validación";
+        return "Se ha enviado un correo con el código de validación y es :"+codigoValidacion;
     }
 
 
@@ -159,11 +164,11 @@ public class CuentaServicioImpl implements CuentaServicio {
 
         Cuenta cuenta = obtenerPorEmail(cambiarPasswordDTO.email());
 
-       if (cuenta.getCodigoValidacionPassword().getFechaCreacion().plusMinutes(15).isBefore(LocalDateTime.now())){
+       if (!cuenta.getCodigoValidacionPassword().getFechaCreacion().plusMinutes(15).isBefore(LocalDateTime.now())){
 
            if (cuenta.getCodigoValidacionPassword().getCodigo().equals(cambiarPasswordDTO.codigoVerificacion())){
 
-               cuenta.setPassword(cambiarPasswordDTO.passwordNueva());
+               cuenta.setPassword(encriptarPassword(cambiarPasswordDTO.passwordNueva()));
                cuentaRepo.save(cuenta);
                return "La contraseña ha sido actualizada correctamente";
            }

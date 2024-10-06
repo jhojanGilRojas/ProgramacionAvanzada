@@ -13,11 +13,10 @@ import java.time.LocalDateTime;
 @ToString
 
 public class Pago {
-    // no se si deberia ser una collecion
-    private String id;
-    private String moneda;
+
+    //private String moneda;
     private String tipoPago;
-    private String detalleEstado;
+    // private String detalleEstado;
     private String codigoAutorizacion;
     private String estado;
     private float valorTransaccion;
