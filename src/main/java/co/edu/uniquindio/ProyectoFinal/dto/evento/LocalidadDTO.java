@@ -8,5 +8,5 @@ import org.hibernate.validator.constraints.Length;
 public record LocalidadDTO (
         @NotBlank @Length(max = 100) String nombre,
         @NotNull @Min(1) Integer capacidadMaxima,
-        @NotNull @Min(0) Integer precio){
+        @NotNull @Min(0) Float precio){
 }
