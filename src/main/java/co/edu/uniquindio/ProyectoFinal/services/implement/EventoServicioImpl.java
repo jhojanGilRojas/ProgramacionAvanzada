@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +37,15 @@ public class EventoServicioImpl implements EventoServicio {
         nuevoEvento.setImagenLocalidades(crearEventoDTO.imagenLocalidades());
         // validar que no haya un evento en la misma fecha y lugar
         if(existeEvento(nuevoEvento.getFecha(), nuevoEvento.getDireccion(), nuevoEvento.getCiudad())){
-            throw new Exception("Ya hay un evento programado en ese lugar en la misma fecha");
+            throw new Exception("Ya hay un evento programado en ese lugar el mismo dia");
         }
         eventoRepo.save(nuevoEvento);  // Guardar el evento en la base de datos
         return nuevoEvento.getIdEvento();  // Retornar el ID del nuevo evento
     }
 
     private boolean existeEvento(LocalDateTime fecha, String direccion, String ciudad) {
-        return eventoRepo.findByFechaAndCiudadAndDireccion(fecha, ciudad,direccion).isPresent();
+        LocalDate soloFecha = fecha.toLocalDate();  // Extraer solo la fecha
+        return eventoRepo.findByFechaAndCiudadAndDireccion(soloFecha, ciudad, direccion).isPresent();
     }
 
     private List<Localidad> crearLocalidades(List<LocalidadDTO> localidadesDTO) {
@@ -79,6 +81,9 @@ public class EventoServicioImpl implements EventoServicio {
     @Override
     public InformacionEventoDTO obtenerInformacionEvento(String id) throws Exception {
         Evento evento = buscarEventoPorId(id);
+        if(evento.getEstado().equals(EstadoEvento.INACTIVA)){
+            throw new Exception("El evento no se encuentra activo");
+        }
         return new InformacionEventoDTO(
                 evento.getIdEvento(),
                 evento.getNombre(),
@@ -147,7 +152,7 @@ public class EventoServicioImpl implements EventoServicio {
             eventos = eventos.stream().filter(evento -> evento.getCiudad().equals(eventoFiltro.ciudad())).collect(Collectors.toList());
         }
         else if (eventoFiltro.ciudad() != null && !eventoFiltro.ciudad().isEmpty()&& eventoFiltro.nombre() != null && !eventoFiltro.nombre().isEmpty()&& eventoFiltro.tipoEvento()!=null) {
-            eventos = eventoRepo.findByNombreContainingIgnoreCaseAAndAndTipoAndCiudad(eventoFiltro.nombre(),eventoFiltro.tipoEvento().name(),eventoFiltro.ciudad());
+            eventos = eventoRepo.findByNombreContainingIgnoreCaseAndTipoAndCiudad(eventoFiltro.nombre(),eventoFiltro.tipoEvento().name(),eventoFiltro.ciudad());
 
         } else {
             // Si no hay filtro, retorna todos los eventos
