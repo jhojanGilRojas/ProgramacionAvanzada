@@ -19,19 +19,19 @@ public class EventoServicioTest {
 
     @Test
     public void crearEventoTest() {
-        LocalidadDTO localidadnorte = new LocalidadDTO("Norte", 100, 100000.0f);
-        LocalidadDTO localidadsur = new LocalidadDTO("Sur", 100, 80000.0f);
+        LocalidadDTO localidadnorte = new LocalidadDTO("Occidente", 100, 100000.0f);
+        LocalidadDTO localidadsur = new LocalidadDTO("Norte", 100, 80000.0f);
         LocalidadDTO localidadoccidente = new LocalidadDTO("Occidente", 100, 60000.0f);
         List<LocalidadDTO> localidades = List.of(localidadnorte, localidadsur, localidadoccidente);
         CrearEventoDTO nuevoEvento = new CrearEventoDTO(
-                "NFrealmusic",
-                "Cantante de rap en ingles conocido como nf",
-                LocalDateTime.of(2025, 10, 10, 20, 0),
+                "nacional vs medellin",
+                "Partido liga nacional colombiana",
+                LocalDateTime.of(2024, 10, 30, 20, 0),
                 TipoEvento.CONCIERTO,
-                "Coliseo del cafe",
-                "Armenia",
+                "Atanasio Girardot",
+                "Medellin",
                 localidades,
-                "Nfrealmusic.jpg",
+                "NACVSMED.jpg",
                 "Localidades.jpg"
         );
         assertDoesNotThrow(() -> {
