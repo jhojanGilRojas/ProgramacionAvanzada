@@ -3,6 +3,8 @@ package co.edu.uniquindio.ProyectoFinal.services.interfaces;
 import co.edu.uniquindio.ProyectoFinal.dto.cuenta.*;
 import co.edu.uniquindio.ProyectoFinal.dto.jws.TokenDTO;
 
+import java.util.List;
+
 public interface CuentaServicio {
 
 
@@ -14,10 +16,12 @@ public interface CuentaServicio {
 
     InformacionCuentaDTO obtenerInformacionCuenta(String id) throws Exception;
 
-    String enviarCodigoRecuperacionPassword(String codigo) throws Exception;
+    String enviarCodigoRecuperacionPassword(String email) throws Exception;
 
     String cambiarPassword(CambiarPasswordDTO cambiarPasswordDTO) throws Exception;
 
     TokenDTO iniciarSesion(LoginDTO loginDTO) throws Exception;
+
+    List<ItemCuentaDTO> listarCuentas() throws Exception;
 
 }

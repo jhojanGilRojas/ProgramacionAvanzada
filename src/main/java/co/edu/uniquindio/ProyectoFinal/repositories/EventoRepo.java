@@ -14,7 +14,7 @@ public interface EventoRepo extends MongoRepository<Evento, String> {
     List<Evento> findByCiudad(String ciudad);
     List<Evento> findByTipo(String tipo);
     List<Evento> findByNombreContainingIgnoreCase(String nombre);
-    List<Evento> findByNombreContainingIgnoreCaseAAndAndTipoAndCiudad(String nombre, String tipo, String ciudad);
+    List<Evento> findByNombreContainingIgnoreCaseAndAndTipoAndCiudad(String nombre, String tipo, String ciudad);
     List<Evento> findByNombreContainingIgnoreCaseAndTipo(String nombre, String tipo);
     List<Evento> findByNombreContainingIgnoreCaseAndCiudad(String nombre, String ciudad);
 }

@@ -147,7 +147,7 @@ public class EventoServicioImpl implements EventoServicio {
             eventos = eventos.stream().filter(evento -> evento.getCiudad().equals(eventoFiltro.ciudad())).collect(Collectors.toList());
         }
         else if (eventoFiltro.ciudad() != null && !eventoFiltro.ciudad().isEmpty()&& eventoFiltro.nombre() != null && !eventoFiltro.nombre().isEmpty()&& eventoFiltro.tipoEvento()!=null) {
-            eventos = eventoRepo.findByNombreContainingIgnoreCaseAAndAndTipoAndCiudad(eventoFiltro.nombre(),eventoFiltro.tipoEvento().name(),eventoFiltro.ciudad());
+            eventos = eventoRepo.findByNombreContainingIgnoreCaseAndAndTipoAndCiudad(eventoFiltro.nombre(),eventoFiltro.tipoEvento().name(),eventoFiltro.ciudad());
 
         } else {
             // Si no hay filtro, retorna todos los eventos

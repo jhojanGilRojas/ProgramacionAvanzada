@@ -34,7 +34,6 @@ public class Evento {
     private TipoEvento tipo;
 
     @Builder
-
     public Evento(String nombre, String descripcion, String direccion, String imagenPortada, String imagenLocalidades, String ciudad, LocalDateTime fecha, List<Localidad> localidades, EstadoEvento estado, TipoEvento tipo) {
         this.nombre = nombre;
         this.descripcion = descripcion;

@@ -2,20 +2,17 @@ package co.edu.uniquindio.ProyectoFinal.model.documents;
 
 import co.edu.uniquindio.ProyectoFinal.model.enums.EstadoCupon;
 import co.edu.uniquindio.ProyectoFinal.model.enums.TipoCupon;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Document("cupones")
-@AllArgsConstructor
 @Setter
 @Getter
 @ToString
+@NoArgsConstructor
 public class Cupon {
 
     @Id
@@ -27,4 +24,15 @@ public class Cupon {
     private TipoCupon tipoCupon;
     private LocalDateTime fecha;
     private float descuento;
+
+    @Builder
+
+    public Cupon(String codigo, String nombre, EstadoCupon estadoCupon, TipoCupon tipoCupon, LocalDateTime fecha, float descuento) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.estadoCupon = estadoCupon;
+        this.tipoCupon = tipoCupon;
+        this.fecha = fecha;
+        this.descuento = descuento;
+    }
 }

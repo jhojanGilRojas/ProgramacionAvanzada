@@ -22,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -222,6 +224,31 @@ public class CuentaServicioImpl implements CuentaServicio {
 
         return cuentaOptional.get();
     }
+
+    @Override
+    public List<ItemCuentaDTO> listarCuentas() throws Exception {
+
+        //Obtenemos todas las cuentas de los usuarios de la base de datos
+        List<Cuenta> cuentas = cuentaRepo.findAll();
+        if (cuentas.isEmpty()){
+            throw new Exception("No hay cuentas creadas");
+        }
+        //Creamos una lista de DTOs
+        List<ItemCuentaDTO> items = new ArrayList<>();
+
+        //Recorremos la lista de cuentas y por cada uno creamos un DTO y lo agregamos a la lista
+        for (Cuenta cuenta : cuentas) {
+            items.add( new ItemCuentaDTO(
+                    cuenta.getIdCuenta(),
+                    cuenta.getUsuario().getNombre(),
+                    cuenta.getEmail(),
+                    cuenta.getUsuario().getTelefono()
+            ));
+        }
+
+        return items;
+    }
+
 
     private String encriptarPassword(String password){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
