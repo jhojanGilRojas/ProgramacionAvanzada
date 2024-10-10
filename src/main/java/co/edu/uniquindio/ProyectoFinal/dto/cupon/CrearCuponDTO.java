@@ -11,7 +11,6 @@ public record CrearCuponDTO (
 
         @NotBlank String codigo,
         @NotBlank String nombre,
-        @NotBlank  LocalDateTime fecha,
         @NotBlank float descuento
 ) {
 }

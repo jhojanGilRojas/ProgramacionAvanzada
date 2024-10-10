@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CuponServicioImpl implements CuponServicio {
+public class  CuponServicioImpl implements CuponServicio {
 
     private final CuponRepo cuponRepo;
     private final OrdenRepo ordenRepo;
@@ -29,9 +29,16 @@ public class CuponServicioImpl implements CuponServicio {
     @Override
     public Boolean validarCupon(AplicarCuponDTO aplicarCuponDTO) throws Exception {
 
-        Optional<Orden> orden = ordenRepo.findByCuentaIdAndCuponRedimido(idCuenta, codigoCupon);
+        Optional<Orden> orden = ordenRepo.findByIdClienteAndIdCupon(aplicarCuponDTO.idCuenta(), aplicarCuponDTO.codigoCupon());
+        Optional<Cupon>cuponOptional = cuponRepo.findByCodigo(aplicarCuponDTO.codigoCupon());
+        Cupon cupon = cuponOptional.get();
 
-
+        if (cuponOptional.isEmpty()){
+            throw new Exception("No exite un cupón con este codigo");
+        }
+        if (cupon.getFecha().isBefore(LocalDateTime.now())){
+            throw new Exception("El cupón ya expiro");
+        }
         if (orden.isPresent()) {
             throw new Exception("El cupón ya ha sido redimido por este cliente.");
         }
@@ -81,7 +88,7 @@ public class CuponServicioImpl implements CuponServicio {
     @Override
     public String EditarCupon(EditarCuponDTO editarCuponDTO) throws Exception {
 
-        Optional<Cupon> cuponOptional = cuponRepo.findByCodigo(editarCuponDTO.codigo());
+        Optional<Cupon> cuponOptional = cuponRepo.findByCodigo(editarCuponDTO.idCupon());
         if (cuponOptional.isEmpty()){
             throw new Exception("No existe ningún cupon con ese codigo");
         }
