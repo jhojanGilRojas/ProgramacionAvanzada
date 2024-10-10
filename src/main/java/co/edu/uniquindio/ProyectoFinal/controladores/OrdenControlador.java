@@ -14,15 +14,14 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/orden")
+@RequestMapping("/api/cliente/orden")
 public class OrdenControlador {
 
     private final OrdenServicio ordenServicio;
 
     @PostMapping("/crear-orden")
-    public ResponseEntity<MensajeDTO<String>> crearOrden(CrearOrdenDTO crearOrdenDTO) throws Exception {
-        ordenServicio.crearOrden(crearOrdenDTO);
-        return ResponseEntity.ok().body(new MensajeDTO<>(false, "Orden creada correctamente"));
+    public ResponseEntity<MensajeDTO<String>> crearOrden(@RequestBody CrearOrdenDTO crearOrdenDTO) throws Exception {
+        return ResponseEntity.ok().body(new MensajeDTO<>(false, ordenServicio.crearOrden(crearOrdenDTO)));
     }
 
     @PostMapping("/realizar-pago")

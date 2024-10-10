@@ -9,15 +9,9 @@ import java.util.Optional;
 
 public interface CuponRepo extends MongoRepository<Cupon, String>{
 
-
     /*@Query(value = "findOne{ 'codigo': ?0 }")
     Optional<Cupon> findByCodigoCupon(String codigoCupon);*/
 
     @Query("{ codigo:?0 }")
     Optional<Cupon> findByCodigoCupon(String codigoCupon);
-
-
-
-
-
 }

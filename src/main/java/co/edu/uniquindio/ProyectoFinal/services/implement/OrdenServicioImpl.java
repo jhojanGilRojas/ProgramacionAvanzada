@@ -50,7 +50,7 @@ public class OrdenServicioImpl  implements OrdenServicio {
         Carrito carrito = carritoServicio.obtenerCarritoPorId(crearOrdenDTO.idCarrito());
 
         Orden orden = new Orden();
-        orden.setIdCliente(crearOrdenDTO.idUser());
+        orden.setIdCliente(crearOrdenDTO.idUsuario());
         orden.setFecha(LocalDateTime.now());
 
         if(validarCupon(cupon)){
@@ -225,7 +225,7 @@ public class OrdenServicioImpl  implements OrdenServicio {
 
     private boolean validarCupon(Cupon cupon){
         if(cupon.getEstadoCupon().equals(EstadoCupon.NO_DISPONIBLE)) return true;
-        if(cupon.getFechaVencimiento().isAfter(LocalDateTime.now())) return true;
+        if(cupon.getFechaVencimiento().isBefore(LocalDateTime.now())) return true;
         return false;
     }
 

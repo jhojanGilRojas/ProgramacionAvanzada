@@ -22,8 +22,8 @@ public class OrdernServicioTest {
     public void crearOrdenTest() {
         CrearOrdenDTO  crearOrdenDTO = new CrearOrdenDTO(
                 "66fb1b8a27ca9803bbb300d3",
-                "66fb203c19d1bf7f668c8b52",
-                "CUPON13"
+                "670752a7b8d4077f18ead4ea",
+                "CUPON100"
         );
         assertDoesNotThrow(() ->{
             ordenServicio.crearOrden(crearOrdenDTO);
