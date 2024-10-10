@@ -8,9 +8,9 @@ public interface EventoServicio {
 
     String crearEvento(CrearEventoDTO crearEventoDTO) throws Exception;
 
-    String editarEvento(EditarEventoDTO editarEventoDTO) throws Exception;
+    void editarEvento(EditarEventoDTO editarEventoDTO) throws Exception;
 
-    String eliminarEvento(String id) throws Exception;
+    void eliminarEvento(String id) throws Exception;
 
     InformacionEventoDTO obtenerInformacionEvento(String id) throws Exception;
 

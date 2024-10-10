@@ -1,8 +1,6 @@
 package co.edu.uniquindio.ProyectoFinal;
 
 import co.edu.uniquindio.ProyectoFinal.dto.evento.*;
-import co.edu.uniquindio.ProyectoFinal.model.Localidad;
-import co.edu.uniquindio.ProyectoFinal.model.documents.Evento;
 import co.edu.uniquindio.ProyectoFinal.model.enums.TipoEvento;
 import co.edu.uniquindio.ProyectoFinal.services.interfaces.EventoServicio;
 import org.junit.jupiter.api.Test;

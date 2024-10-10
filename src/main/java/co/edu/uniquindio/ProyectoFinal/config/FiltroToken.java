@@ -35,22 +35,20 @@ public class FiltroToken extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_OK);
         }else {
 
-
             //Obtener la URI de la petición que se está realizando
             String requestURI = request.getRequestURI();
-
-
             //Se obtiene el token de la petición del encabezado del mensaje HTTP
             String token = getToken(request);
             boolean error = true;
 
 
             try {
-
                 //Si la petición es para la ruta /api/cliente se verifica que el token exista y que el rol sea CLIENTE
                 if (requestURI.startsWith("/api/cliente")) {
                     error = validarToken(token, Rol.CLIENTE);
-                }else {
+                } else if (requestURI.startsWith("/api/administrador")) {
+                    error = validarToken(token, Rol.ADMINISTRADOR);
+                } else {
                     error = false;
                 }
 

@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,7 +61,7 @@ public class EventoServicioImpl implements EventoServicio {
     }
 
     @Override
-    public String editarEvento(EditarEventoDTO eventoEditado) throws Exception {
+    public void editarEvento(EditarEventoDTO eventoEditado) throws Exception {
         if(existeEvento(eventoEditado.fecha(), eventoEditado.direccion(), eventoEditado.ciudad())){
             throw new Exception("Ya hay un evento programado en ese lugar en la misma fecha");
         }
@@ -75,7 +76,6 @@ public class EventoServicioImpl implements EventoServicio {
         eventoModificado.setImagenPortada(eventoEditado.imagenPortada());
         eventoModificado.setImagenLocalidades(eventoEditado.imagenLocalidades());
         eventoRepo.save(eventoModificado);
-        return String.valueOf(eventoModificado.getIdEvento());
     }
 
     @Override
@@ -106,11 +106,15 @@ public class EventoServicioImpl implements EventoServicio {
     }
 
     @Override
-    public String eliminarEvento(String id) throws Exception {
-        Evento evento = buscarEventoPorId(id);
+    public void eliminarEvento(String id) throws Exception {
+        Optional<Evento> eventoOptional = eventoRepo.findById(id);
+
+        if (eventoOptional.isEmpty()) {
+            throw new Exception("No se encontró el evento con id: " + id);
+        }
+        Evento evento = eventoOptional.get();
         evento.setEstado(EstadoEvento.INACTIVA);
         eventoRepo.save(evento);
-        return "Evento eliminado";
     }
 
 
