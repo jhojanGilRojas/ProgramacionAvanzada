@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @SpringBootTest
 public class ServicioCuentaTest {
@@ -19,7 +20,7 @@ public class ServicioCuentaTest {
     private JWTUtils jwtUtils;
 
     @Test
-    void crearCuentaTest(){
+    void crearCuentaTest() {
         CrearCuentaDTO crearCuentaDTO = new CrearCuentaDTO(
                 "1066",
                 "Jhojan Gil",
@@ -31,17 +32,17 @@ public class ServicioCuentaTest {
 
 
         // Se espera que no se lance ninguna excepción
-        assertDoesNotThrow( () -> {
+        assertDoesNotThrow(() -> {
             // Se crea la cuenta y se imprime el id
             String id = cuentaServicio.crearCuenta(crearCuentaDTO);
             // Se espera que el id no sea nulo
             assertNotNull(id);
-        } );
+        });
 
     }
 
     @Test
-    void iniciarSesionTest(){
+    void iniciarSesionTest() {
 
         LoginDTO loginDTO = new LoginDTO(
                 "jhogillds@gmail.com",
@@ -49,19 +50,19 @@ public class ServicioCuentaTest {
         );
 
         // Se espera que no se lance ninguna excepción
-        assertDoesNotThrow( () -> {
+        assertDoesNotThrow(() -> {
             // Se inicia sesion y retorna el token JWS
             TokenDTO tokenDTO = cuentaServicio.iniciarSesion(loginDTO);
             System.out.println(tokenDTO.token());
             System.out.println(jwtUtils.parseJwt(tokenDTO.token()).getPayload().toString());
             // Se espera que el valor del token no sea nulo
             assertNotNull(tokenDTO);
-        } );
+        });
 
     }
 
     @Test
-    public void actualizarCuentaTest(){
+    public void actualizarCuentaTest() {
 
         //Se define el id de la cuenta del usuario a actualizar, este id está en el dataset.js
         String idCuenta = "66fe4c64830f155e8afb9743";
@@ -94,7 +95,7 @@ public class ServicioCuentaTest {
 
 
     @Test
-    public void eliminarCuentaTest(){
+    public void eliminarCuentaTest() {
 
 
         //Se define el id de la cuenta del usuario a eliminar, este id está en el dataset.js
@@ -102,13 +103,12 @@ public class ServicioCuentaTest {
 
 
         //Se elimina la cuenta del usuario con el id definido
-        assertDoesNotThrow(() -> cuentaServicio.eliminarCuenta(idCuenta) );
+        assertDoesNotThrow(() -> cuentaServicio.eliminarCuenta(idCuenta));
 
 
         //Al intentar obtener la cuenta del usuario con el id definido se debe lanzar una excepción
-        assertThrows(Exception.class, () -> cuentaServicio.obtenerInformacionCuenta(idCuenta) );
+        assertThrows(Exception.class, () -> cuentaServicio.obtenerInformacionCuenta(idCuenta));
     }
-
 
 
     @Test
@@ -124,11 +124,11 @@ public class ServicioCuentaTest {
     }
 
     @Test
-    void enviarCodigoRecuperacionPasswordTest(){
+    void enviarCodigoRecuperacionPasswordTest() {
 
         String correo = "pepeperez@email.com";
 
-        assertDoesNotThrow(() ->{
+        assertDoesNotThrow(() -> {
 
             String respuesta = cuentaServicio.enviarCodigoRecuperacionPassword(correo);
             System.out.println(respuesta);
@@ -136,7 +136,7 @@ public class ServicioCuentaTest {
     }
 
     @Test
-    void cambiarPasswordTest(){
+    void cambiarPasswordTest() {
 
         CambiarPasswordDTO cambiarPasswordDTO = new CambiarPasswordDTO(
                 "pepeperez@email.com",
@@ -144,10 +144,23 @@ public class ServicioCuentaTest {
                 "123456"
         );
 
-        assertDoesNotThrow(() ->{
+        assertDoesNotThrow(() -> {
 
             String respuesta = cuentaServicio.cambiarPassword(cambiarPasswordDTO);
             System.out.println(respuesta);
-    });
+        });
+    }
+
+    @Test
+    public void listarTest() throws Exception {
+
+        //Se obtiene la lista de las cuentas de los usuarios
+        List<ItemCuentaDTO> lista = cuentaServicio.listarCuentas();
+
+        //Se verifica que la lista no sea nula y que tenga 3 elementos (o los que hayan)
+        for (ItemCuentaDTO itemCuentaDTO : lista) {
+            System.out.println(itemCuentaDTO);
+        }
+        assertNotNull(lista);
     }
 }

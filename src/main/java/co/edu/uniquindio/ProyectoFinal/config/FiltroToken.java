@@ -30,7 +30,6 @@ public class FiltroToken extends OncePerRequestFilter {
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, Content-Type, Authorization");
 
-
         if (request.getMethod().equals("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_OK);
         }else {
@@ -40,7 +39,6 @@ public class FiltroToken extends OncePerRequestFilter {
             //Se obtiene el token de la petición del encabezado del mensaje HTTP
             String token = getToken(request);
             boolean error = true;
-
 
             try {
                 //Si la petición es para la ruta /api/cliente se verifica que el token exista y que el rol sea CLIENTE
@@ -52,9 +50,7 @@ public class FiltroToken extends OncePerRequestFilter {
                     error = false;
                 }
 
-
                 //Agregar la validación para las peticiones que sean de los administradores
-
 
                 //Si hay un error se crea una respuesta con el mensaje del error
                 if(error){
