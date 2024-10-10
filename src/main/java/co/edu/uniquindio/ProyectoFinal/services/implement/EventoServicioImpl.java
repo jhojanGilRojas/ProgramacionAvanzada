@@ -46,6 +46,6 @@ public class EventoServicioImpl implements EventoServicio {
 
     @Override
     public Evento obtenerPorID(String id) throws Exception {
-        return eventoRepo.findById(id).orElseThrow(()-> new Exception("No se encontro la cuenta con el id: "+id));
+        return eventoRepo.findById(id).orElseThrow(()-> new Exception("No se encontro el evento con el id: "+id));
     }
 }

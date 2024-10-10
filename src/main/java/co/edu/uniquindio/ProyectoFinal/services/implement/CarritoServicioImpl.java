@@ -31,14 +31,14 @@ public class CarritoServicioImpl implements CarritoServicio {
     private final CuentaServicio cuentaServicio;
 
     @Override
-    public String crearCarrito(String idUsuario) throws Exception {
+    public void crearCarrito(String idUsuario) throws Exception {
         cuentaServicio.obtenerPorID(idUsuario);
         Carrito carrito = new Carrito();
         carrito.setIdUsuario(idUsuario);
         carrito.setFecha(LocalDateTime.now());
         carrito.setItems(new ArrayList<>());
         carritoRepo.save(carrito);
-        return "Se ha creado el carrito de compras con el id: ";
+        //return "Se ha creado el carrito de compras con el id: ";
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CarritoServicioImpl implements CarritoServicio {
         }
 
         evento.getLocalidades().forEach((localidad)->{
-            if(localidad.equals(detalle.nombreLocalidad())){
+            if(localidad.equals(detalle.localidad())){
                 if(localidad.getCapacidadMaxima() < detalle.cantidad()){
                     throw new RuntimeException("Ya están agotadas las entradas a la localidad");
                 }
@@ -67,7 +67,7 @@ public class CarritoServicioImpl implements CarritoServicio {
         DetalleCarrito detalleCarrito = new DetalleCarrito();
         detalleCarrito.setCantidad(detalle.cantidad());
         detalleCarrito.setIdEvento(detalle.idEvento());
-        detalleCarrito.setNombreLocalidad(detalle.nombreLocalidad());
+        detalleCarrito.setNombreLocalidad(detalle.localidad());
         carrito.getItems().add(detalleCarrito);
         carritoRepo.save(carrito);
     }
@@ -138,10 +138,15 @@ public class CarritoServicioImpl implements CarritoServicio {
         carrito.getItems().forEach((item)->{
             if(item.getIdEvento().equals(actualizarEventoCarritoDTO.idEvento())){
                 item.setCantidad(actualizarEventoCarritoDTO.cantidad());
-                item.setNombreLocalidad(actualizarEventoCarritoDTO.localidad());
+                item.setNombreLocalidad(actualizarEventoCarritoDTO.nombreLocalidad());
             }
         });
         carritoRepo.save(carrito);
+    }
+
+    @Override
+    public Carrito obtenerCarritoPorId(String idCarrito) throws Exception {
+        return carritoRepo.findById(idCarrito).orElseThrow(() -> new Exception("No se encontro el carrito con el id: "+idCarrito));
     }
 
 }

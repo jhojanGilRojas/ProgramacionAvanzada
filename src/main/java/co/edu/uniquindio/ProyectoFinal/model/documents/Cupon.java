@@ -25,6 +25,6 @@ public class Cupon {
     private String nombre;
     private EstadoCupon estadoCupon;
     private TipoCupon tipoCupon;
-    private LocalDateTime fecha;
+    private LocalDateTime fechaVencimiento;
     private float descuento;
 }

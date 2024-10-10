@@ -34,4 +34,12 @@ public class Evento {
     private TipoEvento tipo;
 
 
+    public Localidad obtenerLocalidad(String nombreLocalidad) {
+        for (Localidad localidad : localidades) {
+            if (localidad.getNombre().equals(nombreLocalidad)) {
+                return localidad;
+            }
+        }
+        return null;
+    }
 }

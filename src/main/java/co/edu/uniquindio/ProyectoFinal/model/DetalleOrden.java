@@ -1,9 +1,6 @@
 package co.edu.uniquindio.ProyectoFinal.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.bson.types.ObjectId;
 
 @AllArgsConstructor
@@ -14,9 +11,13 @@ public class DetalleOrden {
 
     private String id;
     private String nombreLocalidad;
-    private ObjectId idEvento;
+    private String idEvento;
     private float precio;
     private int cantidad;
 
 
+    @Builder
+    public DetalleOrden(){
+
+    }
 }

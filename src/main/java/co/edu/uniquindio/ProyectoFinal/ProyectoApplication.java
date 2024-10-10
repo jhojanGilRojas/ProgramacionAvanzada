@@ -14,12 +14,6 @@ public class ProyectoApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProyectoApplication.class, args);
     }
-//
-//    @GetMapping ("/hello")
-//    public String hello(@RequestParam(value = "name",defaultValue = "JhojanGil")String name){
-//        return String.format("<h1>hola %s!</h1> ",name);
-//    }
-
 
 }
 

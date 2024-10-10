@@ -108,8 +108,6 @@ public class CuentaServicioImpl implements CuentaServicio {
 
     @Override
     public Cuenta obtenerPorID(String idCuenta) throws Exception {
-
-            return cuentaRepo.findById(idCuenta).orElseThrow(()-> new Exception("No se encontro el evento con el id: "+idCuenta));
-
+        return cuentaRepo.findById(idCuenta).orElseThrow(()-> new Exception("No se encontro el evento con el id: "+idCuenta));
     }
 }
