@@ -25,8 +25,6 @@ public class CuentaServicioImpl implements CuentaServicio {
 
     @Override
     public String crearCuenta(CrearCuentaDTO cuenta) throws Exception{
-
-
         if (existeEmail(cuenta.correo())){
             throw new Exception("El correo ya existe");
         }

@@ -36,7 +36,7 @@ public class Evento {
 
     public Localidad obtenerLocalidad(String nombreLocalidad) {
         for (Localidad localidad : localidades) {
-            if (localidad.getNombre().equals(nombreLocalidad)) {
+            if (localidad.getNombre().equalsIgnoreCase(nombreLocalidad)) {
                 return localidad;
             }
         }

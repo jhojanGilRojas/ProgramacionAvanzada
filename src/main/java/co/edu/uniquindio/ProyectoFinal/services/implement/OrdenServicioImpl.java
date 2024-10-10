@@ -21,14 +21,11 @@ import com.mercadopago.client.preference.PreferenceBackUrlsRequest;
 import com.mercadopago.client.preference.PreferenceClient;
 import com.mercadopago.client.preference.PreferenceItemRequest;
 import com.mercadopago.client.preference.PreferenceRequest;
-import com.mercadopago.exceptions.MPApiException;
-import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
 import com.mercadopago.resources.preference.Preference;
-import com.mercadopago.resources.preference.PreferenceItem;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -92,13 +89,46 @@ public class OrdenServicioImpl  implements OrdenServicio {
     }
 
     @Override
-    public String cancelarOrden(String id) throws Exception {
-        return "";
+    public void cancelarOrden(String idOrden) throws Exception {
+        Orden orden = obtenerOrden(idOrden);
+        orden.getPago().setEstado("CANCELADO");
+        ordenRepo.save(orden);
     }
 
     @Override
-    public InformacionOrdenDTO obtenerInformacionOrden(String id) throws Exception {
-        return null;
+    @Transactional(readOnly = true)
+    public List<InformacionOrdenDTO> obtenerOrdenes(String idUsuario) {
+        List<Orden> ordenesList = ordenRepo.findAll();
+        List<InformacionOrdenDTO> informacionOrdenListDTO = new ArrayList<>();
+
+        for(Orden orden : ordenesList){
+            InformacionOrdenDTO  informacionOrdenDTO = new InformacionOrdenDTO(
+                    orden.getIdOrden(),
+                    orden.getFecha(),
+                    orden.getCodigoPasarela(),
+                    orden.getItems(),
+                    orden.getPago(),
+                    orden.getTotal(),
+                    orden.getIdCupon()
+            );
+            informacionOrdenListDTO.add(informacionOrdenDTO);
+        }
+        return informacionOrdenListDTO;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public InformacionOrdenDTO obtenerInformacionOrden(String idOrden) throws Exception {
+        Orden ordenEncontrada = obtenerOrden(idOrden);
+        return new InformacionOrdenDTO(
+            ordenEncontrada.getIdOrden(),
+                ordenEncontrada.getFecha(),
+                ordenEncontrada.getCodigoPasarela(),
+                ordenEncontrada.getItems(),
+                ordenEncontrada.getPago(),
+                ordenEncontrada.getTotal(),
+                ordenEncontrada.getIdCupon()
+        );
     }
 
     @Override
@@ -133,19 +163,6 @@ public class OrdenServicioImpl  implements OrdenServicio {
         }
 
     }
-    private Pago crearPago(Payment payment) {
-        Pago pago = new Pago();
-        pago.setCodigo(payment.getId().toString());
-        pago.setFecha( payment.getDateCreated().toLocalDateTime() );
-        pago.setEstado(payment.getStatus());
-        pago.setDetalleEstado(payment.getStatusDetail());
-        pago.setTipoPago(payment.getPaymentTypeId());
-        pago.setMoneda(payment.getCurrencyId());
-        pago.setCodigoAutorizacion(payment.getAuthorizationCode());
-        pago.setValorTransaccion(payment.getTransactionAmount().floatValue());
-        return pago;
-    }
-
 
     @Override
     public Preference realzarPagoOrden(String idOrden) throws Exception {
@@ -167,10 +184,9 @@ public class OrdenServicioImpl  implements OrdenServicio {
                     .build();
 
             itemsPasarela.add(itemRequest);
-
         }
 
-        MercadoPagoConfig.setAccessToken("ACCESS TOKEN");
+        MercadoPagoConfig.setAccessToken("APP_USR-1994851373395453-100922-21f8c7fed6fce844f16bcddc0e97ec72-400277426");
 
         PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
                 .success("URL PAGO EXITOSO")
@@ -182,7 +198,7 @@ public class OrdenServicioImpl  implements OrdenServicio {
                 .backUrls(backUrls)
                 .items(itemsPasarela)
                 .metadata(Map.of("id_orden", ordenGuardada.getIdOrden()))
-                .notificationUrl("URL NOTIFICACION")
+                .notificationUrl("URL_NOTIFICACION")
                 .build();
 
         PreferenceClient client = new PreferenceClient();
@@ -192,13 +208,19 @@ public class OrdenServicioImpl  implements OrdenServicio {
         ordenRepo.save(ordenGuardada);
 
         return preference;
-
     }
 
-    @Override
-    public void obtenerOrdenes(String idUsuario) {
-        ordenRepo.findAll();
-
+    private Pago crearPago(Payment payment) {
+        Pago pago = new Pago();
+        pago.setCodigo(payment.getId().toString());
+        pago.setFecha( payment.getDateCreated().toLocalDateTime() );
+        pago.setEstado(payment.getStatus());
+        pago.setDetalleEstado(payment.getStatusDetail());
+        pago.setTipoPago(payment.getPaymentTypeId());
+        pago.setMoneda(payment.getCurrencyId());
+        pago.setCodigoAutorizacion(payment.getAuthorizationCode());
+        pago.setValorTransaccion(payment.getTransactionAmount().floatValue());
+        return pago;
     }
 
     private boolean validarCupon(Cupon cupon){
