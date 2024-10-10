@@ -1,6 +1,7 @@
 package co.edu.uniquindio.ProyectoFinal.repositories;
 
 import co.edu.uniquindio.ProyectoFinal.model.documents.Evento;
+import co.edu.uniquindio.ProyectoFinal.model.enums.EstadoEvento;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.time.LocalDate;
@@ -17,5 +18,5 @@ public interface EventoRepo extends MongoRepository<Evento, String> {
     List<Evento> findByNombreContainingIgnoreCaseAndTipoAndCiudad(String nombre, String tipo, String ciudad);
     List<Evento> findByNombreContainingIgnoreCaseAndTipo(String nombre, String tipo);
     List<Evento> findByNombreContainingIgnoreCaseAndCiudad(String nombre, String ciudad);
-    List<Evento> findByEstado();
+    List<Evento> findByEstado(EstadoEvento estado);
 }

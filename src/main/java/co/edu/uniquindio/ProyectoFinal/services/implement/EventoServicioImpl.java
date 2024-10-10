@@ -127,6 +127,16 @@ public class EventoServicioImpl implements EventoServicio {
         }
         return itemsEvento;
     }
+
+    @Override
+    public List<ItemEventoDTO> listarEventosCliente(){
+        List<Evento> eventos = eventoRepo.findByEstado(EstadoEvento.ACTIVA);
+        List<ItemEventoDTO> itemsEvento = new ArrayList<>();
+        for (Evento evento : eventos) {
+            itemsEvento.add(new ItemEventoDTO(evento.getNombre(), evento.getFecha(), evento.getDireccion(), evento.getCiudad(), evento.getImagenPortada()));
+        }
+        return itemsEvento;
+    }
     private Evento buscarEventoPorId(String id) throws Exception {
         return eventoRepo.findById(id).orElseThrow(() -> new Exception("No se encontró el evento con id: " + id));
     }

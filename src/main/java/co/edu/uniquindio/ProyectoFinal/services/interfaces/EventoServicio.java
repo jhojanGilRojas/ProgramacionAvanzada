@@ -16,5 +16,8 @@ public interface EventoServicio {
 
     List<ItemEventoDTO> listarEventos();
 
+    List<ItemEventoDTO> listarEventosCliente();
+
     List<ItemEventoDTO> filtrarEventos(FiltroEventoDTO filtroEventoDTO);
+
 }
