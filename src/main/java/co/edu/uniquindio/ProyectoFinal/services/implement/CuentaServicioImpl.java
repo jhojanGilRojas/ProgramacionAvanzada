@@ -6,8 +6,6 @@ import co.edu.uniquindio.ProyectoFinal.config.JWTUtils;
 import co.edu.uniquindio.ProyectoFinal.dto.email.EmailDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.jws.TokenDTO;
 import co.edu.uniquindio.ProyectoFinal.services.interfaces.EmailServicio;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import co.edu.uniquindio.ProyectoFinal.dto.cuenta.*;
@@ -70,7 +68,7 @@ public class CuentaServicioImpl implements CuentaServicio {
 
         emailServicio.enviarCorreo( new EmailDTO("Codigo validación registro", "su codigo es: "+nuevaCuenta.getCodigoValidacionRegistro(), nuevaCuenta.getEmail()) );
 
-        return "Su cuenta se ha creado correctamente";
+        return ""+nuevaCuenta.getCodigoValidacionRegistro();
     }
 
     private String generarCodigo() {
@@ -203,7 +201,12 @@ public class CuentaServicioImpl implements CuentaServicio {
 
         Cuenta cuenta = obtenerPorEmail(loginDTO.correo());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
+        if (cuenta.getEstadoCuenta().equals(EstadoCuenta.INACTIVO)){
+            throw new Exception("La cuenta se encuentra inactiva");
+        }
+        if (cuenta.getEstadoCuenta().equals(EstadoCuenta.ELIMINADO)){
+            throw new Exception("La cuenta se encuentra eliminada");
+        }
 
         if( !passwordEncoder.matches(loginDTO.password(),cuenta.getPassword()) ) {
             throw new Exception("La contraseña es incorrecta");
@@ -264,6 +267,32 @@ public class CuentaServicioImpl implements CuentaServicio {
     @Override
     public Cuenta obtenerPorID(String idCuenta) throws Exception {
         return cuentaRepo.findById(idCuenta).orElseThrow(()-> new Exception("No se encontro el evento con el id: "+idCuenta));
+    }
+
+    @Override
+    public String validarCuenta(ValidarCuentaDTO validarCuentaDTO) throws Exception {
+
+        Optional<Cuenta> cuentaOptional = cuentaRepo.findById(validarCuentaDTO.id());
+
+        if (!cuentaOptional.isPresent()) {
+            throw new Exception("La cuenta no existe");
+        }
+
+        Cuenta cuenta = cuentaOptional.get();
+
+        if (!cuenta.getCodigoValidacionRegistro().getFechaCreacion().plusMinutes(15).isBefore(LocalDateTime.now())) {
+            if (cuenta.getCodigoValidacionRegistro().getCodigo().equals(validarCuentaDTO.codigo())) {
+                cuenta.setEstadoCuenta(EstadoCuenta.ACTIVO);
+                cuentaRepo.save(cuenta);
+
+                return "La cuenta ha sido activada correctamente";
+            }else {
+                throw new Exception("El codigo de validación es incorrecto");
+            }
+        }else {
+            throw new Exception ("El codigo de validacion expiró");
+        }
+
     }
 
 }
