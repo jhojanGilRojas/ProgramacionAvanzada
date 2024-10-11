@@ -2,6 +2,7 @@ package co.edu.uniquindio.ProyectoFinal.services.interfaces;
 
 import co.edu.uniquindio.ProyectoFinal.dto.cuenta.*;
 import co.edu.uniquindio.ProyectoFinal.dto.jws.TokenDTO;
+import co.edu.uniquindio.ProyectoFinal.model.documents.Cuenta;
 
 import java.util.List;
 
@@ -24,4 +25,5 @@ public interface CuentaServicio {
 
     List<ItemCuentaDTO> listarCuentas() throws Exception;
 
+    Cuenta obtenerPorID(String idUsuario) throws Exception;
 }

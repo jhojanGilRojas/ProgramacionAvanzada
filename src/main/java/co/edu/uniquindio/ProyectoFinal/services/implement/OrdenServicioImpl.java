@@ -66,7 +66,7 @@ public class OrdenServicioImpl  implements OrdenServicio {
             //buscar el evento, buscar la localidad y obtener el precio
             Evento evento = null;
             try {
-                evento = eventoServicio.obtenerPorID(item.getIdEvento());
+                evento = eventoServicio.buscarEventoPorId(item.getIdEvento());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -170,7 +170,7 @@ public class OrdenServicioImpl  implements OrdenServicio {
         List<PreferenceItemRequest> itemsPasarela = new ArrayList<>();
 
         for(DetalleOrden detalleOrden : ordenGuardada.getItems()){
-            Evento evento = eventoServicio.obtenerPorID(detalleOrden.getIdEvento());
+            Evento evento = eventoServicio.buscarEventoPorId(detalleOrden.getIdEvento());
             Localidad localidad = evento.obtenerLocalidad(detalleOrden.getNombreLocalidad());
 
             PreferenceItemRequest itemRequest = PreferenceItemRequest.builder()

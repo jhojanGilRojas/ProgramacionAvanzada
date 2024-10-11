@@ -6,11 +6,8 @@ import co.edu.uniquindio.ProyectoFinal.dto.carrito.DetalleCarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.carrito.EliminarEventoCarritoDTO;
 import co.edu.uniquindio.ProyectoFinal.model.DetalleCarrito;
 import co.edu.uniquindio.ProyectoFinal.model.documents.Carrito;
-import co.edu.uniquindio.ProyectoFinal.model.documents.Cuenta;
 import co.edu.uniquindio.ProyectoFinal.model.documents.Evento;
 import co.edu.uniquindio.ProyectoFinal.repositories.CarritoRepo;
-import co.edu.uniquindio.ProyectoFinal.repositories.CuentaRepo;
-import co.edu.uniquindio.ProyectoFinal.repositories.EventoRepo;
 import co.edu.uniquindio.ProyectoFinal.services.interfaces.CarritoServicio;
 import co.edu.uniquindio.ProyectoFinal.services.interfaces.CuentaServicio;
 import co.edu.uniquindio.ProyectoFinal.services.interfaces.EventoServicio;
@@ -44,7 +41,7 @@ public class CarritoServicioImpl implements CarritoServicio {
     @Override
     public void agregarEventoCarrito(DetalleCarritoDTO detalle) throws Exception {
         Optional<Carrito> optionalCarrito = carritoRepo.findById(detalle.idCarrito());
-        Evento evento = eventoServicio.obtenerPorID(detalle.idEvento());
+        Evento evento = eventoServicio.buscarEventoPorId(detalle.idEvento());
 
         if(optionalCarrito.isEmpty()){
             throw new Exception("No se encontro el carrito con el id: "+detalle.idCarrito());
@@ -129,7 +126,7 @@ public class CarritoServicioImpl implements CarritoServicio {
     @Override
     public void actualizarEventoCarrito(ActualizarEventoCarritoDTO actualizarEventoCarritoDTO) throws Exception {
         Optional<Carrito> optionalCarrito = carritoRepo.findById(actualizarEventoCarritoDTO.idCarrito());
-        eventoServicio.obtenerPorID(actualizarEventoCarritoDTO.idEvento());
+        eventoServicio.buscarEventoPorId(actualizarEventoCarritoDTO.idEvento());
         if(optionalCarrito.isEmpty()){
             throw new Exception("No se encontro el carrito con el id: "+actualizarEventoCarritoDTO.idCarrito());
         }

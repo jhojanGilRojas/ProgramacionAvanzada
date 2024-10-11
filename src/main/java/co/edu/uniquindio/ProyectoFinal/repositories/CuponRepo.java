@@ -11,4 +11,5 @@ public interface CuponRepo extends MongoRepository <Cupon,String> {
 
     @Query("{codigo: ?0}")
     Optional<Cupon> findByCodigo(String codigo);
+
 }

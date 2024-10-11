@@ -32,7 +32,7 @@ public class Cupon {
         this.nombre = nombre;
         this.estadoCupon = estadoCupon;
         this.tipoCupon = tipoCupon;
-        this.fecha = fecha;
+        this.fechaVencimiento = fecha;
         this.descuento = descuento;
     }
 }

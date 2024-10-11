@@ -5,7 +5,6 @@ import co.edu.uniquindio.ProyectoFinal.model.documents.Cupon;
 import co.edu.uniquindio.ProyectoFinal.model.documents.Orden;
 import co.edu.uniquindio.ProyectoFinal.model.enums.EstadoCupon;
 import co.edu.uniquindio.ProyectoFinal.model.enums.TipoCupon;
-import co.edu.uniquindio.ProyectoFinal.repositories.CuentaRepo;
 import co.edu.uniquindio.ProyectoFinal.repositories.CuponRepo;
 import co.edu.uniquindio.ProyectoFinal.repositories.OrdenRepo;
 import co.edu.uniquindio.ProyectoFinal.services.interfaces.CuponServicio;
@@ -36,7 +35,7 @@ public class  CuponServicioImpl implements CuponServicio {
         if (cuponOptional.isEmpty()){
             throw new Exception("No exite un cupón con este codigo");
         }
-        if (cupon.getFecha().isBefore(LocalDateTime.now())){
+        if (cupon.getFechaVencimiento().isBefore(LocalDateTime.now())){
             throw new Exception("El cupón ya expiro");
         }
         if (orden.isPresent()) {
@@ -59,7 +58,7 @@ public class  CuponServicioImpl implements CuponServicio {
         cupon.setTipoCupon(TipoCupon.MULTIPLE);
         cupon.setEstadoCupon(EstadoCupon.DISPONIBLE);
         cupon.setDescuento(crearCuponDTO.descuento());
-        cupon.setFecha(LocalDateTime.now());
+        cupon.setFechaVencimiento(LocalDateTime.now());
         cuponRepo.save(cupon);
 
         return "El cupon ha sido creado con exito";
@@ -79,7 +78,7 @@ public class  CuponServicioImpl implements CuponServicio {
         cupon.setTipoCupon(TipoCupon.MULTIPLE);
         cupon.setEstadoCupon(EstadoCupon.DISPONIBLE);
         cupon.setDescuento(crearCuponUnicoDTO.descuento());
-        cupon.setFecha(LocalDateTime.now());
+        cupon.setFechaVencimiento(LocalDateTime.now());
         cuponRepo.save(cupon);
 
         return "El cupon ha sido creado con exito";
@@ -115,7 +114,7 @@ public class  CuponServicioImpl implements CuponServicio {
                 cupon.getCodigo(),
                 cupon.getNombre(),
                 cupon.getTipoCupon(),
-                cupon.getFecha(),
+                cupon.getFechaVencimiento(),
                 cupon.getDescuento()
         );
 
@@ -138,7 +137,7 @@ public class  CuponServicioImpl implements CuponServicio {
                     cupon.getCodigo(),
                     cupon.getNombre(),
                     cupon.getTipoCupon(),
-                    cupon.getFecha(),
+                    cupon.getFechaVencimiento(),
                     cupon.getDescuento()
             ));
         }
@@ -153,6 +152,6 @@ public class  CuponServicioImpl implements CuponServicio {
 
     @Override
     public Cupon obtenerCuponPorCodigo(String codigoCupon) throws Exception{
-        return cuponRepo.findByCodigoCupon(codigoCupon).orElseThrow(() -> new Exception("El cupon no existe"));
+        return cuponRepo.findByCodigo(codigoCupon).orElseThrow(() -> new Exception("El cupon no existe"));
     }
 }

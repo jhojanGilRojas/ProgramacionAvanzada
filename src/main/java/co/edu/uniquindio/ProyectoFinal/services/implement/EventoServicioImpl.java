@@ -137,7 +137,7 @@ public class EventoServicioImpl implements EventoServicio {
         }
         return itemsEvento;
     }
-    private Evento buscarEventoPorId(String id) throws Exception {
+    public Evento buscarEventoPorId(String id) throws Exception {
         return eventoRepo.findById(id).orElseThrow(() -> new Exception("No se encontró el evento con id: " + id));
     }
 
