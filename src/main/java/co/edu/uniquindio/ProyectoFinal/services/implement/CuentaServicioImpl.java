@@ -201,10 +201,10 @@ public class CuentaServicioImpl implements CuentaServicio {
 
         Cuenta cuenta = obtenerPorEmail(loginDTO.correo());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        if (!cuenta.getEstadoCuenta().equals(EstadoCuenta.INACTIVO)){
+        if (cuenta.getEstadoCuenta().equals(EstadoCuenta.INACTIVO)){
             throw new Exception("La cuenta se encuentra inactiva");
         }
-        if (!cuenta.getEstadoCuenta().equals(EstadoCuenta.ELIMINADO)){
+        if (cuenta.getEstadoCuenta().equals(EstadoCuenta.ELIMINADO)){
             throw new Exception("La cuenta se encuentra eliminada");
         }
 
