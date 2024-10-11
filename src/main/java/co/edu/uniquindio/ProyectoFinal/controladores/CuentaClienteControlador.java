@@ -52,4 +52,11 @@ public class CuentaClienteControlador {
         cuentaServicio.enviarCodigoRecuperacionPassword(email);
         return ResponseEntity.ok(new MensajeDTO<>(false, "Código de recuperación enviado exitosamente"));
     }
+
+    @PutMapping("/validar-correo{id}")
+    public ResponseEntity<MensajeDTO<String>> validarCorreo(@Valid @RequestBody ValidarCuentaDTO validarCuentaDTO ) throws  Exception{
+
+        cuentaServicio.validarCuenta(validarCuentaDTO);
+        return ResponseEntity.ok(new MensajeDTO<>(false, "Correo validado, se ha activado su cuenta"));
+    }
 }
