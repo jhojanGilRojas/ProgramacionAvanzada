@@ -17,9 +17,6 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cuenta {
-
-
-
     @Id
 //  @EqualsAndHashCode
     private String idCuenta;

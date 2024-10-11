@@ -2,15 +2,13 @@ package co.edu.uniquindio.ProyectoFinal.model.documents;
 
 import co.edu.uniquindio.ProyectoFinal.model.DetalleOrden;
 import co.edu.uniquindio.ProyectoFinal.model.Pago;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Document("Ordenes")
@@ -18,6 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
+@Builder
 public class Orden {
 
     @Id
@@ -26,9 +25,12 @@ public class Orden {
     private LocalDateTime fecha;
     private String codigoPasarela;
     private Pago pago;
-    private ObjectId idCliente;
-    private ObjectId idCupon;
+    private String idCliente;
+    private String idCupon;
     private List<DetalleOrden> items;
     private float total;
-    // construtor Builder
+
+    public Orden() {
+        this.items = new ArrayList<>();
+    }
 }

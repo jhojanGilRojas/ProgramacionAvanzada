@@ -46,4 +46,13 @@ public class Evento {
         this.estado = estado;
         this.tipo = tipo;
     }
+
+    public Localidad obtenerLocalidad(String nombreLocalidad) {
+        for (Localidad localidad : localidades) {
+            if (localidad.getNombre().equalsIgnoreCase(nombreLocalidad)) {
+                return localidad;
+            }
+        }
+        return null;
+    }
 }

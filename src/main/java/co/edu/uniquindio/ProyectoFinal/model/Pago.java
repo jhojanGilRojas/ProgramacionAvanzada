@@ -1,9 +1,6 @@
 package co.edu.uniquindio.ProyectoFinal.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,15 +8,19 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @ToString
-
+@Builder
 public class Pago {
-
-    //private String moneda;
+    // no se si deberia ser una collecion
+    private String codigo;
+    private String moneda;
     private String tipoPago;
-    // private String detalleEstado;
+    private String detalleEstado;
     private String codigoAutorizacion;
     private String estado;
     private float valorTransaccion;
     private LocalDateTime fecha;
+
+    public Pago() {
+    }
 
 }

@@ -146,4 +146,13 @@ public class  CuponServicioImpl implements CuponServicio {
         return items;
     }
 
+    @Override
+    public Cupon obtenerCupon(String idCupon) throws Exception {
+        return cuponRepo.findById(idCupon).orElseThrow(() -> new Exception("El cupon no existe"));
+    }
+
+    @Override
+    public Cupon obtenerCuponPorCodigo(String codigoCupon) throws Exception{
+        return cuponRepo.findByCodigoCupon(codigoCupon).orElseThrow(() -> new Exception("El cupon no existe"));
+    }
 }
