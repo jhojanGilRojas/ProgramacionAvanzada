@@ -27,7 +27,7 @@ public class  CuponServicioImpl implements CuponServicio {
     //En este metodo la idea en el momento que se desee redimir el cupón crear el
     // AplicarCuponDTO desde el metodo de la orden
     @Override
-    public Boolean validarCupon(AplicarCuponDTO aplicarCuponDTO) throws Exception {
+    public String validarCupon(AplicarCuponDTO aplicarCuponDTO) throws Exception {
 
         Optional<Orden> orden = ordenRepo.findByIdClienteAndIdCupon(aplicarCuponDTO.idCuenta(), aplicarCuponDTO.codigoCupon());
         Optional<Cupon>cuponOptional = cuponRepo.findByCodigo(aplicarCuponDTO.codigoCupon());
@@ -42,7 +42,7 @@ public class  CuponServicioImpl implements CuponServicio {
         if (orden.isPresent()) {
             throw new Exception("El cupón ya ha sido redimido por este cliente.");
         }
-        return true;
+        return "El cupón se puede redimir";
     }
 
     @Override

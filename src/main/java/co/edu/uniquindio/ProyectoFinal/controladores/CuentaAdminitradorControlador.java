@@ -1,7 +1,6 @@
-package co.edu.uniquindio.ProyectoFinal.controllers;
+package co.edu.uniquindio.ProyectoFinal.controladores;
 import co.edu.uniquindio.ProyectoFinal.dto.cuenta.*;
 import co.edu.uniquindio.ProyectoFinal.dto.jws.MensajeDTO;
-import co.edu.uniquindio.ProyectoFinal.dto.jws.TokenDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +10,12 @@ import co.edu.uniquindio.ProyectoFinal.services.interfaces.CuentaServicio;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/cuenta")
+@RequestMapping("/api/administrador/cuenta")
 @RequiredArgsConstructor
-public class CuentaControlador {
+public class CuentaAdminitradorControlador {
 
     private final CuentaServicio cuentaServicio;
 
-    @PostMapping("/crear-cuenta")
-    public ResponseEntity<MensajeDTO<String>> crearCuenta(@Valid @RequestBody CrearCuentaDTO cuenta) throws Exception{
-        cuentaServicio.crearCuenta(cuenta);
-        return ResponseEntity.ok(new MensajeDTO<>(false, "Cuenta creada exitosamente"));
-    }
 
     @PutMapping("/editar-perfil")
     public ResponseEntity<MensajeDTO<String>> editarCuenta(@Valid @RequestBody EditarCuentaDTO cuenta) throws Exception{

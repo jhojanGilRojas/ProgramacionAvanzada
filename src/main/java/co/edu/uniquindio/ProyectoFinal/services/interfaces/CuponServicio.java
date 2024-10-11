@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CuponServicio {
 
-    Boolean validarCupon (AplicarCuponDTO aplicarCuponDTO) throws Exception;
+    String validarCupon (AplicarCuponDTO aplicarCuponDTO) throws Exception;
 
     String crearCupon (CrearCuponDTO crearCuponDTO) throws Exception;
 
