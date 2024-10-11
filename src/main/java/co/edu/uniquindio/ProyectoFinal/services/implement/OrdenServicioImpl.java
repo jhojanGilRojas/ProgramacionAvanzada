@@ -1,5 +1,6 @@
 package co.edu.uniquindio.ProyectoFinal.services.implement;
 
+import co.edu.uniquindio.ProyectoFinal.dto.cupon.AplicarCuponDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.orden.CrearOrdenDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.orden.InformacionOrdenDTO;
 import co.edu.uniquindio.ProyectoFinal.model.DetalleOrden;
@@ -53,7 +54,10 @@ public class OrdenServicioImpl  implements OrdenServicio {
         orden.setIdCliente(crearOrdenDTO.idUsuario());
         orden.setFecha(LocalDateTime.now());
 
-        if(validarCupon(cupon)){
+        if(cuponServicio.validarCupon(new AplicarCuponDTO(
+                carrito.getIdUsuario(),
+                cupon.getCodigo()
+        ))){
             throw new Exception("El cupon no es valido");
         }
         orden.setIdCupon(crearOrdenDTO.codigoCupon());
@@ -221,12 +225,6 @@ public class OrdenServicioImpl  implements OrdenServicio {
         pago.setCodigoAutorizacion(payment.getAuthorizationCode());
         pago.setValorTransaccion(payment.getTransactionAmount().floatValue());
         return pago;
-    }
-
-    private boolean validarCupon(Cupon cupon){
-        if(cupon.getEstadoCupon().equals(EstadoCupon.NO_DISPONIBLE)) return true;
-        if(cupon.getFechaVencimiento().isBefore(LocalDateTime.now())) return true;
-        return false;
     }
 
     private Orden obtenerOrden(String idOrden){
