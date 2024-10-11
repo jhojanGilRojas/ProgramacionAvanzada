@@ -1,5 +1,4 @@
-package co.edu.uniquindio.ProyectoFinal.controllers;
-import co.edu.uniquindio.ProyectoFinal.dto.cuenta.CambiarPasswordDTO;
+package co.edu.uniquindio.ProyectoFinal.controladores;
 import co.edu.uniquindio.ProyectoFinal.dto.jws.MensajeDTO;
 import co.edu.uniquindio.ProyectoFinal.dto.jws.TokenDTO;
 import co.edu.uniquindio.ProyectoFinal.services.interfaces.CuentaServicio;

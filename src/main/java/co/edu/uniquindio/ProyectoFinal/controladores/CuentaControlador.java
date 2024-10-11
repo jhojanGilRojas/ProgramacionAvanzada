@@ -1,7 +1,6 @@
-package co.edu.uniquindio.ProyectoFinal.controllers;
+package co.edu.uniquindio.ProyectoFinal.controladores;
 import co.edu.uniquindio.ProyectoFinal.dto.cuenta.*;
 import co.edu.uniquindio.ProyectoFinal.dto.jws.MensajeDTO;
-import co.edu.uniquindio.ProyectoFinal.dto.jws.TokenDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
