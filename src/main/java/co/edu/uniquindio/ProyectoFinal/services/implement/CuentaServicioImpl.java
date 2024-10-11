@@ -281,7 +281,7 @@ public class CuentaServicioImpl implements CuentaServicio {
         Cuenta cuenta = cuentaOptional.get();
 
         if (!cuenta.getCodigoValidacionRegistro().getFechaCreacion().plusMinutes(15).isBefore(LocalDateTime.now())) {
-            if (cuenta.getCodigoValidacionRegistro().equals(validarCuentaDTO.codigo())) {
+            if (cuenta.getCodigoValidacionRegistro().getCodigo().equals(validarCuentaDTO.codigo())) {
                 cuenta.setEstadoCuenta(EstadoCuenta.ACTIVO);
                 cuentaRepo.save(cuenta);
 
